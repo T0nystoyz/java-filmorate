@@ -14,14 +14,14 @@ public class User {
     public long id = IdGenerator.nextId();
     @NotBlank(message = "поле *login* не может быть пустым")
     @Pattern(regexp = "^[A-Za-z\\d]*$", message = "поле *login* не должно содержать пробелы и спец. символы")
-    String login;
-    String name;
+    private String login;
+    private String name;
     @NotBlank(message = "поле *email* не может быть пустым")
     @Email(message = "неверный формат поля *email*")
-    String email;
+    private String email;
     @Past(message = "поле *birthday* не может указывать на будущую дату")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    LocalDate birthday;
+    private LocalDate birthday;
 
     private static class IdGenerator {
         private static long id = 0;

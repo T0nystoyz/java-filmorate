@@ -24,7 +24,7 @@ public @interface IsAfter {
 
     class DateValidator implements ConstraintValidator<IsAfter, LocalDate> {
 
-        String validDate;
+        private String validDate;
 
         @Override
         public void initialize(IsAfter constraintAnnotation) {

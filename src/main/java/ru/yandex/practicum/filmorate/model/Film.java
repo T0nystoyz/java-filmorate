@@ -14,16 +14,16 @@ import java.time.LocalDate;
 @Data
 public class Film {
     @Positive
-    long id = IdGenerator.nextId();
+    private long id = IdGenerator.nextId();
     @NotBlank
-    String name;
+    private String name;
     @Size(max = 200, message = "допустимый размер описания: 200 символов")
-    String description;
+    private String description;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @IsAfter(current = "1895-12-28", message = "до 28 декабря 1895 года фильмов не существовало")
-    LocalDate releaseDate;
+    private LocalDate releaseDate;
     @Min(0)
-    int duration;
+    private int duration;
 
     private static class IdGenerator {
         private static long id = 0;
