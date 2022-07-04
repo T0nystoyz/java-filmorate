@@ -3,18 +3,20 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.lang.Nullable;
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.utils.IsAfter;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
+
 @Slf4j
 @Data
+@Component
 public class Film {
-    @Positive
-    private long id = IdGenerator.nextId();
+/*    @Nullable
+    @Positive*/
+    private Long id;
     @NotBlank
     private String name;
     @Size(max = 200, message = "допустимый размер описания: 200 символов")
@@ -24,12 +26,7 @@ public class Film {
     private LocalDate releaseDate;
     @Min(0)
     private int duration;
+    private Integer rate;
 
-    private static class IdGenerator {
-        private static long id = 0;
 
-        public static long nextId() {
-            return ++id;
-        }
-    }
 }
