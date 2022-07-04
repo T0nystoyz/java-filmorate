@@ -18,8 +18,11 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Documented
 public @interface IsAfter {
     String message() default "{message.key}";
+
     String current();
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 
     class DateValidator implements ConstraintValidator<IsAfter, LocalDate> {

@@ -2,12 +2,12 @@ package ru.yandex.practicum.filmorate.storage;
 
 import lombok.Data;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.utils.IdGenerator;
 
-import javax.validation.Valid;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Data
 @Component
@@ -17,7 +17,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public Film createFilm(Film film) {
-        if(film.getId() == null){
+        if (film.getId() == null) {
             film.setId(IdGenerator.nextFilmId());
         }
         films.put(film.getId(), film);
@@ -31,7 +31,7 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Film getById(Long id){
+    public Film getById(Long id) {
         return films.get(id);
     }
 
