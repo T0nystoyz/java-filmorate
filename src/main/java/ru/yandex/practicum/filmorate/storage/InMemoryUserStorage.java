@@ -13,12 +13,11 @@ import java.util.Map;
 @Component
 @Slf4j
 public class InMemoryUserStorage implements UserStorage {
-    private final static Map<Long, User> users = new HashMap<>();
+    private final Map<Long, User> users = new HashMap<>();
 
 
     @Override
     public List<User> getUsers() {
-        log.info("получен запрос на список пользователей");
         return new ArrayList<>(users.values());
     }
 
@@ -29,7 +28,6 @@ public class InMemoryUserStorage implements UserStorage {
 
     @Override
     public User createUser(User user) {
-        log.info("получен запрос на создание пользователя");
         if (user.getName() == null || user.getName().isBlank() || user.getName().isEmpty()) {
             user.setName(user.getLogin());
         }
@@ -37,7 +35,6 @@ public class InMemoryUserStorage implements UserStorage {
             user.setId(IdGenerator.nextUserId());
         }
         users.put(user.getId(), user);
-        log.info("пользователь добавлен в базу");
         return users.get(user.getId());
     }
 
@@ -47,12 +44,10 @@ public class InMemoryUserStorage implements UserStorage {
             user.setName(user.getLogin());
         }
 
-        log.info("получен запрос на обновление пользователя");
         if (!users.containsKey(user.getId()) && user.getId() >= 1) {
             users.put(user.getId(), user);
         } else {
             users.put(user.getId(), user);
-            log.info("пользователь обновлен");
         }
         return users.get(user.getId());
     }

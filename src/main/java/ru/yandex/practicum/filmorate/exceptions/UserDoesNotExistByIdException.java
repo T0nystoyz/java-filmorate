@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UserDoesNotExistByIdException extends Exception {
+public class UserDoesNotExistByIdException extends RuntimeException {
 
 
     public UserDoesNotExistByIdException(String message) {

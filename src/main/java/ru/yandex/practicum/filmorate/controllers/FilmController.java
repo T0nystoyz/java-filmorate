@@ -46,7 +46,7 @@ public class FilmController {
     }
 
     @DeleteMapping("/films/{id}/like/{userId}")
-    public void unLike(@PathVariable Long id, @PathVariable Long userId) throws NoFilmByIdException, UserDoesNotExistByIdException {
+    public void unLike(@PathVariable Long id, @PathVariable Long userId) throws UserDoesNotExistByIdException {
         service.deleteLike(id, userId);
     }
 

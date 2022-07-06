@@ -11,7 +11,9 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Validated
@@ -41,19 +43,13 @@ public class UserController {
     }
 
     @PutMapping("/users/{id}/friends/{friendId}")
-    public ResponseEntity<String> addFriend(@PathVariable Long id, @PathVariable Long friendId) {
-        try {
+    public void addFriend(@PathVariable Long id, @PathVariable Long friendId) {
             service.addFriend(id, friendId);
-        } catch (UserDoesNotExistByIdException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            return id < 1 || friendId < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(service.addFriend(id, friendId), HttpStatus.OK);
-        } catch (UserDoesNotExistByIdException e) {
-            throw new RuntimeException(e);
-        }
+            /*return id < 1 || friendId < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
+                    : new ResponseEntity<>(HttpStatus.OK);*/
+
     }
+
 
     @DeleteMapping("/users/{id}/friends/{friendId}")
     public String deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
@@ -62,8 +58,8 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/friends")
-    public Object[] getFriendsOf(@PathVariable Long id) {
-        return service.getFriendsOf(id).toArray();
+    public Set<User> getFriendsOf(@PathVariable Long id) {
+        return service.getFriendsOf(id);
     }
 
     @GetMapping("/users/{id}/friends/common/{otherId}")

@@ -13,7 +13,7 @@ import java.util.*;
 @Service
 @Slf4j
 public class UserService {
-    private final static Map<Long, Set<User>> friends = new HashMap<>();
+    private final Map<Long, Set<User>> friends = new HashMap<>();
     private final UserStorage storage;
 
     @Autowired
@@ -30,50 +30,61 @@ public class UserService {
     }
 
     public User createUser(User user) {
+        log.info("создали пользователя " + user.getName());
         return storage.createUser(user);
     }
 
     public User update(User user) {
+        log.info("обновили пользователя " + user.getName());
         return storage.update(user);
     }
 
-    public String addFriend(Long id, Long friendId) throws UserDoesNotExistByIdException {
+    public void addFriend(Long id, Long friendId) throws UserDoesNotExistByIdException {
+        log.info("получен запрос на добавление в друзья");
         if (id < 1 || friendId < 1) {
+            log.info("ошибка из-за неверного id");
             throw new UserDoesNotExistByIdException("пользователь не может существовать с таким айди");
         }
-        log.info("получен запрос на добавление в друзья");
+
         if (!friends.containsKey(id)) {
             friends.put(id, new HashSet<>());
+            log.info("это первый друг для пользователя " + storage.getById(id).getName());
         }
         if (!friends.containsKey(friendId)) {
             friends.put(friendId, new HashSet<>());
-        } else {
-
+            log.info("это первый друг для пользователя " + storage.getById(friendId).getName());
+        }
             friends.get(id).add(storage.getById(friendId));
             friends.get(friendId).add(storage.getById(id));
-            return "пользователи доавлены в друзья";
-        }
-        return "ok";
+            log.info(storage.getById(id).getName() + " и " + storage.getById(friendId).getName() + " теперь друзья");
     }
 
 
     public void deleteFriend(Long id, Long friendId) {
-        log.info("получен запрос удаление из друзей");
+        log.info("получен запрос удаление из друзей ползователей с id " + id + ", " + friendId);
         if (!friends.get(id).contains(storage.getById(friendId))) {
+            log.info("у пользователя нет такого друга с id " + friendId);
+            throw new UserDoesNotExistByIdException("у пользователя " + storage.getById(id).getName()
+                    + " нет друга с таким id: " + storage.getById(friendId));
         } else if (!friends.containsKey(id)) {
+            throw new UserDoesNotExistByIdException("у пользователя " + storage.getById(id).getName()
+                    + " нет друзей");
         } else {
             friends.get(id).remove(storage.getById(friendId));
             friends.get(friendId).remove(storage.getById(id));
+            log.info(storage.getById(id).getName() + " и " + storage.getById(friendId).getName() + " больше не друзья");
         }
     }
 
-    public List<User> getFriendsOf(Long id) {
-        log.info("получен запрос на список друзей");
+    public Set<User> getFriendsOf(Long id) {
+        log.info("получен запрос на список друзей пользователя " + storage.getById(id).getName());
         if (!friends.containsKey(id)) {
-            return new ArrayList<>();
+            log.info("у пользователя пока нет друзей");
+            return new HashSet<>();
+        } else {
+            //Set<User> friendsOf = friends.get(id);
+            return friends.get(id);
         }
-        Set<User> friendsOf = friends.get(id);
-        return new ArrayList<>(friendsOf);
     }
 
     public List<User> getCommonFriends(Long id, Long otherId) throws UserDoesNotExistByIdException {
@@ -86,8 +97,8 @@ public class UserService {
             log.info("UserDoesNotExistByIdException: пользователь c id = \"{}\" не найден", otherId);
             throw new UserDoesNotExistByIdException("Пользователь не найден");
         }
-        List<User> friendList = getFriendsOf(otherId);
-        List<User> userList = getFriendsOf(id);
+        Set<User> friendList = getFriendsOf(otherId);
+        Set<User> userList = getFriendsOf(id);
         List<User> common = new ArrayList<>();
         for (User user : friendList) {
             if (userList.contains(user)) {
