@@ -40,8 +40,8 @@ public class UserService {
     }
 
     public void addFriend(Long id, Long friendId) throws UserDoesNotExistByIdException {
-        log.info("получен запрос на добавление в друзья пользователей {} и {}",
-                storage.getById(id).getName(), storage.getById(friendId).getName());
+        log.info("получен запрос на добавление в друзья пользователей c id {} и {}",
+                id, friendId);
         if (id < 1 || friendId < 1) {
             log.info("ошибка из-за неверного id");
             throw new UserDoesNotExistByIdException("пользователь не может существовать с таким айди");
