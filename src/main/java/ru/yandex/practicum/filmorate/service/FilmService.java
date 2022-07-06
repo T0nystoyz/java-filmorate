@@ -42,16 +42,16 @@ public class FilmService {
     public void saveLike(Long filmId, Long userId) {
         log.info("попытка поставить лайк фильму");
         if (!likes.containsKey(filmId)) {
-            log.info("у фильма появился первый лайк!");
+            log.info("у фильма {} появился первый лайк!", storage.getById(filmId).getName());
             likes.put(filmId, new HashSet<>());
         }
         likes.get(filmId).add(userId);
-        log.info("пользователь с id " + userId + " поставил лайк фильму " + storage.getById(filmId).getName());
+        log.info("пользователь с id {} поставил лайк фильму {}", userId, storage.getById(filmId).getName());
     }
 
     public void deleteLike(Long filmId, Long userId) throws UserDoesNotExistByIdException {
         if (!likes.containsKey(filmId)) {
-            log.info("у фильма " + storage.getById(filmId).getName() + " нет лайков!");
+            log.info("у фильма {} нет лайков!", storage.getById(filmId).getName());
             throw new UserDoesNotExistByIdException("у фильма " + storage.getById(filmId).getName() + " нет лайков!");
         }
         likes.get(filmId).remove(userId);

@@ -30,17 +30,18 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        log.info("создали пользователя " + user.getName());
+        log.info("создан пользователь {}", user.getName());
         return storage.createUser(user);
     }
 
     public User update(User user) {
-        log.info("обновили пользователя " + user.getName());
+        log.info("обновилен пользователь {}", user.getName());
         return storage.update(user);
     }
 
     public void addFriend(Long id, Long friendId) throws UserDoesNotExistByIdException {
-        log.info("получен запрос на добавление в друзья");
+        log.info("получен запрос на добавление в друзья пользователей {} и {}",
+                storage.getById(id).getName(), storage.getById(friendId).getName());
         if (id < 1 || friendId < 1) {
             log.info("ошибка из-за неверного id");
             throw new UserDoesNotExistByIdException("пользователь не может существовать с таким айди");
@@ -48,22 +49,22 @@ public class UserService {
 
         if (!friends.containsKey(id)) {
             friends.put(id, new HashSet<>());
-            log.info("это первый друг для пользователя " + storage.getById(id).getName());
+            log.info("это первый друг для пользователя {}", storage.getById(id).getName());
         }
         if (!friends.containsKey(friendId)) {
             friends.put(friendId, new HashSet<>());
-            log.info("это первый друг для пользователя " + storage.getById(friendId).getName());
+            log.info("это первый друг для пользователя {}", storage.getById(friendId).getName());
         }
-            friends.get(id).add(storage.getById(friendId));
-            friends.get(friendId).add(storage.getById(id));
-            log.info(storage.getById(id).getName() + " и " + storage.getById(friendId).getName() + " теперь друзья");
+        friends.get(id).add(storage.getById(friendId));
+        friends.get(friendId).add(storage.getById(id));
+        log.info("{} и {} теперь друзья", storage.getById(friendId).getName(), storage.getById(id).getName());
     }
 
 
     public void deleteFriend(Long id, Long friendId) {
-        log.info("получен запрос удаление из друзей ползователей с id " + id + ", " + friendId);
+        log.info("получен запрос на удаление из друзей ползователей с id {} и {}", id, friendId);
         if (!friends.get(id).contains(storage.getById(friendId))) {
-            log.info("у пользователя нет такого друга с id " + friendId);
+            log.info("у пользователя нет такого друга с id {}", friendId);
             throw new UserDoesNotExistByIdException("у пользователя " + storage.getById(id).getName()
                     + " нет друга с таким id: " + storage.getById(friendId));
         } else if (!friends.containsKey(id)) {
@@ -72,17 +73,16 @@ public class UserService {
         } else {
             friends.get(id).remove(storage.getById(friendId));
             friends.get(friendId).remove(storage.getById(id));
-            log.info(storage.getById(id).getName() + " и " + storage.getById(friendId).getName() + " больше не друзья");
+            log.info("{} и {} больше не друзья", storage.getById(friendId).getName(), storage.getById(id).getName());
         }
     }
 
     public Set<User> getFriendsOf(Long id) {
-        log.info("получен запрос на список друзей пользователя " + storage.getById(id).getName());
+        log.info("получен запрос на список друзей пользователя {}", storage.getById(id).getName());
         if (!friends.containsKey(id)) {
             log.info("у пользователя пока нет друзей");
             return new HashSet<>();
         } else {
-            //Set<User> friendsOf = friends.get(id);
             return friends.get(id);
         }
     }
@@ -90,11 +90,11 @@ public class UserService {
     public List<User> getCommonFriends(Long id, Long otherId) throws UserDoesNotExistByIdException {
 
         if (storage.getById(id) == null) {
-            log.info("UserDoesNotExistByIdException: пользователь c id = \"{}\" не найден", id);
+            log.info("UserDoesNotExistByIdException: пользователь c id {} не найден", id);
             throw new UserDoesNotExistByIdException("Пользователь не найден");
         }
         if (storage.getById(otherId) == null) {
-            log.info("UserDoesNotExistByIdException: пользователь c id = \"{}\" не найден", otherId);
+            log.info("UserDoesNotExistByIdException: пользователь c id {} не найден", otherId);
             throw new UserDoesNotExistByIdException("Пользователь не найден");
         }
         Set<User> friendList = getFriendsOf(otherId);

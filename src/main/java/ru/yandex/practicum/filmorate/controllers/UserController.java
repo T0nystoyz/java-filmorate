@@ -45,9 +45,6 @@ public class UserController {
     @PutMapping("/users/{id}/friends/{friendId}")
     public void addFriend(@PathVariable Long id, @PathVariable Long friendId) {
             service.addFriend(id, friendId);
-            /*return id < 1 || friendId < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND)
-                    : new ResponseEntity<>(HttpStatus.OK);*/
-
     }
 
 
