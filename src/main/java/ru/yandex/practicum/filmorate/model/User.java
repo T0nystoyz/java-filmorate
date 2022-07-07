@@ -3,15 +3,20 @@ package ru.yandex.practicum.filmorate.model;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
 
-import javax.validation.constraints.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 @Slf4j
+@Component
 public class User {
-    @Positive
-    public long id = IdGenerator.nextId();
+    private Long id;
     @NotBlank(message = "поле *login* не может быть пустым")
     @Pattern(regexp = "^[A-Za-z\\d]*$", message = "поле *login* не должно содержать пробелы и спец. символы")
     private String login;
@@ -22,13 +27,8 @@ public class User {
     @Past(message = "поле *birthday* не может указывать на будущую дату")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
+    private Set<Long> friends;
 
-    private static class IdGenerator {
-        private static long id = 0;
 
-        public static long nextId() {
-            return ++id;
-        }
-    }
 }
 

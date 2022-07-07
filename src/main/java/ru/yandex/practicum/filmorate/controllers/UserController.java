@@ -1,52 +1,67 @@
 package ru.yandex.practicum.filmorate.controllers;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exceptions.UserDoesNotExistByIdException;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 @Slf4j
 @Validated
 @RestController
+@Data
 public class UserController {
-    private final Map<Long, User> users = new HashMap<>();
+    private final UserService service;
 
     @GetMapping("/users")
     public List<User> getUsers() {
-        log.info("получен запрос на список пользователей");
-        return new ArrayList<>(users.values());
+        return service.getUsers();
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getById(@PathVariable Long id) throws UserDoesNotExistByIdException {
+        return id < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 
     @PostMapping("/users")
     public User createUser(@Valid @RequestBody User user) {
-        log.info("получен запрос на создание пользователя");
-        if (user.getName() == null || user.getName().isBlank() || user.getName().isEmpty()) {
-            user.setName(user.getLogin());
-        }
-        users.put(user.getId(), user);
-        log.info("пользователь добавлен в базу");
-        return users.get(user.getId());
+        return service.createUser(user);
     }
 
-    @PutMapping("users")
-    public User update(@Valid @RequestBody User user) {
-        if (user.getName() == null || user.getName().isBlank() || user.getName().isEmpty()) {
-            user.setName(user.getLogin());
-        }
-        log.info("получен запрос на создание пользователя");
-        if (!users.containsKey(user.getId())) {
-            createUser(user);
-            log.info("такого пользователя нет. новый пользователь добавлен в базу");
-        } else {
-            users.put(user.getId(), user);
-            log.info("пользователь обновлен");
-        }
-        return users.get(user.getId());
+    @PutMapping("/users")
+    public ResponseEntity<User> update(@Valid @RequestBody User user) {
+        return user.getId() < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(service.update(user), HttpStatus.OK);
+    }
+
+    @PutMapping("/users/{id}/friends/{friendId}")
+    public void addFriend(@PathVariable Long id, @PathVariable Long friendId) {
+            service.addFriend(id, friendId);
+    }
+
+
+    @DeleteMapping("/users/{id}/friends/{friendId}")
+    public String deleteFriend(@PathVariable Long id, @PathVariable Long friendId) {
+        service.deleteFriend(id, friendId);
+        return "друг удален";
+    }
+
+    @GetMapping("/users/{id}/friends")
+    public Set<User> getFriendsOf(@PathVariable Long id) {
+        return service.getFriendsOf(id);
+    }
+
+    @GetMapping("/users/{id}/friends/common/{otherId}")
+    public List<User> getCommonFriends(@PathVariable Long id, @PathVariable Long otherId) throws UserDoesNotExistByIdException {
+        return service.getCommonFriends(id, otherId);
     }
 }
+
