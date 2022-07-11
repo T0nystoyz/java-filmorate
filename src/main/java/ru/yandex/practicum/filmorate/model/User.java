@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
-import java.util.Set;
 
 @Data
 @Slf4j
@@ -27,8 +26,5 @@ public class User {
     @Past(message = "поле *birthday* не может указывать на будущую дату")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-    private Set<Long> friends;
-
-
 }
 
