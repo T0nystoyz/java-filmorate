@@ -10,6 +10,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Slf4j
 @Data
@@ -26,6 +27,6 @@ public class Film {
     @Min(0)
     private int duration;
     private Integer rate;
-
-
+    private List<Genre> genres;
+    private MPARating mpa;
 }
