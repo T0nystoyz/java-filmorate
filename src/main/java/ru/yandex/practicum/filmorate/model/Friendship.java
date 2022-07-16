@@ -1,12 +1,13 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
+
+@Value
 @Data
-@AllArgsConstructor
+@Builder
 public class Friendship {
-    private long userId;
-    private long friendId;
-    private boolean isFriend;
+    User user;
+    User friend;
 }

@@ -5,23 +5,23 @@ Filmorate project
 
 Получить всех пользователей:
 SELECT * 
-FROM user
+FROM USERS
 
 Получить пользователя по id
 SELECT *
-FROM user
+FROM USERS
 WHERE id = n
 
 Получить фильм по идентификатору:
 SELECT * 
-FROM film
+FROM FILMS
 WHERE id = n
 
 Получить первые n популярных фильмов
 SELECT * ,
 COUNT(user_id) 
-FROM film
-RIGHT JOIN likes ON film.id = likes.film_id
+FROM FILMS
+RIGHT JOIN LIKES ON film.id = LIKES.film_id
 GROUP BY film_id
 ORDER BY user_id
 LIMIT n 

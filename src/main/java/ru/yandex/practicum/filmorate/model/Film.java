@@ -1,7 +1,6 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.utils.IsAfter;
@@ -10,11 +9,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
-@Slf4j
+
 @Data
 @Component
+@AllArgsConstructor
+@NoArgsConstructor
 public class Film {
     private Long id;
     @NotBlank
@@ -26,7 +27,15 @@ public class Film {
     private LocalDate releaseDate;
     @Min(0)
     private int duration;
-    private Integer rate;
-    private List<Genre> genres;
+    @NonNull
     private MPARating mpa;
+    private Set<Genre> genres;
+
+
+    public Film(String name, String description, LocalDate releaseDate, int duration) {
+        this.name = name;
+        this.description = description;
+        this.releaseDate = releaseDate;
+        this.duration = duration;
+    }
 }
