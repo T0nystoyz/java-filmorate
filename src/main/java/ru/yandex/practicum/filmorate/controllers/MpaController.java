@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.model.MPARating;
-import ru.yandex.practicum.filmorate.storage.database.MPADbStorage;
+import ru.yandex.practicum.filmorate.service.MpaService;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,16 +17,16 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 @RequestMapping("/mpa")
 public class MpaController {
-    private final MPADbStorage storage;
+    private final MpaService service;
 
     @GetMapping
     List<MPARating> getAll() {
-        return storage.getAllMpa();
+        return service.getAllMpa();
     }
 
     @GetMapping("{id}")
     MPARating get(@PathVariable Long id) {
-        MPARating ratingMPA = storage.getMpaById(id);
+        MPARating ratingMPA = service.getMpaById(id);
         if (ratingMPA == null) throw new NoSuchElementException();
         return ratingMPA;
     }

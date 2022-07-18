@@ -3,25 +3,24 @@ package ru.yandex.practicum.filmorate.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Genre {
-    Integer id;
-
     @JsonProperty("name")
     @NotBlank String title;
+    private Integer id;
 
     @JsonCreator
     public static Genre forObject(@JsonProperty("id") int id, @JsonProperty String title) {
-        return new Genre(id, title);
+        return new Genre(title, id);
     }
 
     @Override

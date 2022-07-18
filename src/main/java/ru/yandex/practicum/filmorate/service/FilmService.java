@@ -9,7 +9,7 @@ import ru.yandex.practicum.filmorate.storage.database.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.database.LikeDbStorage;
 import ru.yandex.practicum.filmorate.storage.database.LikeStorage;
 
-import java.util.*;
+import java.util.Collection;
 
 @Service
 @Slf4j
@@ -35,7 +35,7 @@ public class FilmService {
                 .build());
     }
 
-    public void deleteLike(Long filmId, Long userId){
+    public void deleteLike(Long filmId, Long userId) {
 
         likeStorage.deleteLike(Like
                 .builder()
@@ -56,12 +56,12 @@ public class FilmService {
         return filmStorage.getAllFilms();
     }
 
-    public Film getById(Long id){
+    public Film getById(Long id) {
         Film film = filmStorage.getById(id);
         return film;
     }
 
-    public Film update(Film newFilm){
+    public Film update(Film newFilm) {
         final Film oldFilm = getById(newFilm.getId());
         if (oldFilm.equals(newFilm)) return newFilm;
         return filmStorage.update(newFilm);

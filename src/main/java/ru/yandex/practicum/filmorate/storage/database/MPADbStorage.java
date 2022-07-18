@@ -8,20 +8,22 @@ import ru.yandex.practicum.filmorate.model.MPARating;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+
 @Component
 @Data
-public class MPADbStorage implements MPAStorage{
+public class MPADbStorage implements MPAStorage {
+    private static final String GET_ALL_MPA = "SELECT * FROM MPA";
+    private static final String GET_MPA_BY_ID = "SELECT * FROM MPA WHERE mpa_id = ?";
     private final JdbcTemplate jdbcTemplate;
+
     @Override
     public List<MPARating> getAllMpa() {
-        final String sql = "SELECT * FROM MPA";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToMpa(rs));
+        return jdbcTemplate.query(GET_ALL_MPA, (rs, rowNum) -> mapRowToMpa(rs));
     }
 
     @Override
     public MPARating getMpaById(Long id) {
-        final String sql = "SELECT * FROM mpa WHERE mpa_id = ?";
-        final List<MPARating> mpaRating = jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToMpa(rs), id);
+        final List<MPARating> mpaRating = jdbcTemplate.query(GET_MPA_BY_ID, (rs, rowNum) -> mapRowToMpa(rs), id);
         return mpaRating.size() > 0 ? mpaRating.get(0) : null;
     }
 

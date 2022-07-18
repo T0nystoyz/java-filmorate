@@ -12,19 +12,18 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class GenreDbStorage implements GenreStorage {
+    private static final String GET_ALL = "SELECT * FROM genres ORDER BY genre_id";
+    private static final String GET_BY_ID = "SELECT * FROM GENRES WHERE genre_id = ?";
     private final JdbcTemplate jdbcTemplate;
-
 
     @Override
     public List<Genre> getAll() {
-        final String sql = "SELECT * FROM genres ORDER BY GENRE_ID";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToGenre(rs));
+        return jdbcTemplate.query(GET_ALL, (rs, rowNum) -> mapRowToGenre(rs));
     }
 
     @Override
     public Genre get(Long id) {
-        final String sql = "SELECT * FROM GENRES WHERE genre_id = ?";
-        final List<Genre> genres = jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToGenre(rs), id);
+        final List<Genre> genres = jdbcTemplate.query(GET_BY_ID, (rs, rowNum) -> mapRowToGenre(rs), id);
         return genres.size() > 0 ? genres.get(0) : null;
     }
 

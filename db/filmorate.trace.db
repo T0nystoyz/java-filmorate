@@ -12668,3 +12668,79 @@ INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?) ORDER BY GENRE_ID [420
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?) [*]ORDER BY GENRE_ID"
 Syntax error in SQL statement "INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?) [*]ORDER BY GENRE_ID"; SQL statement:
 INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?) ORDER BY GENRE_ID [42000-212]
+2022-07-19 00:22:56 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:01 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:23:02 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; ожидалось "ALL, ANY, SOME"
+Syntax error in SQL statement "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = [*]%d"; expected "ALL, ANY, SOME"; SQL statement:
+SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = %d [42001-212]
+2022-07-19 00:26:03 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; ожидалось "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"
+Syntax error in SQL statement "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; expected "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = %d WHERE film_id = ? [42001-212]
+2022-07-19 00:26:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; ожидалось "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"
+Syntax error in SQL statement "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; expected "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = %d WHERE film_id = ? [42001-212]
+2022-07-19 00:26:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; ожидалось "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"
+Syntax error in SQL statement "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; expected "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = %d WHERE film_id = ? [42001-212]
+2022-07-19 00:26:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; ожидалось "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"
+Syntax error in SQL statement "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; expected "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = %d WHERE film_id = ? [42001-212]
+2022-07-19 00:26:04 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Синтаксическая ошибка в выражении SQL "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; ожидалось "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"
+Syntax error in SQL statement "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = [*]%d WHERE film_id = ?"; expected "DEFAULT, INTERSECTS, NOT, EXISTS, UNIQUE, INTERSECTS"; SQL statement:
+UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = %d WHERE film_id = ? [42001-212]

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.yandex.practicum.filmorate.model.Genre;
-import ru.yandex.practicum.filmorate.storage.database.GenreStorage;
+import ru.yandex.practicum.filmorate.service.GenreService;
 
 import java.util.Collection;
 import java.util.NoSuchElementException;
@@ -18,16 +18,16 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 @RequestMapping("/genres")
 public class GenreController {
-    private final GenreStorage genreStorage;
+    private final GenreService genreService;
 
     @GetMapping
     Collection<Genre> getAll() {
-        return genreStorage.getAll();
+        return genreService.getAll();
     }
 
     @GetMapping("{id}")
     Genre get(@PathVariable final Long id) {
-        Genre genre = genreStorage.get(id);
+        Genre genre = genreService.get(id);
         if (genre == null) throw new NoSuchElementException();
         return genre;
     }

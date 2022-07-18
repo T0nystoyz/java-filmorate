@@ -1,7 +1,8 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.*;
-import org.springframework.stereotype.Component;
+import lombok.Builder;
+import lombok.Data;
+import lombok.Value;
 
 
 @Value

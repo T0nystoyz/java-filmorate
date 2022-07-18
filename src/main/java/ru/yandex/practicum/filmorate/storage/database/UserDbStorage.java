@@ -19,19 +19,23 @@ import java.util.Objects;
 @Slf4j
 @RequiredArgsConstructor
 public class UserDbStorage implements UserStorage {
+    private static final String GET_ALL_USERS = "SELECT * FROM USERS";
+    private static final String GET_USER_BY_ID = "SELECT * FROM USERS WHERE user_id = ?";
+    private static final String CREATE_USER =
+            "INSERT INTO USERS (user_id, login, name, email, birthday) VALUES (?, ?, ?, ?, ?)";
+    private static final String UPDATE_USER =
+            "UPDATE USERS SET login = ?, name = ?, email = ?, birthday = ? WHERE user_id = ?";
+    private static final String DELETE_USER = "DELETE FROM USERS WHERE user_id = ?";
     private final JdbcTemplate jdbcTemplate;
 
     @Override
     public List<User> getUsers() {
-        final String sql = "SELECT * FROM USERS";
-        return jdbcTemplate.query(sql, (rs, rowNum) -> mapRowToUser(rs));
+        return jdbcTemplate.query(GET_ALL_USERS, (rs, rowNum) -> mapRowToUser(rs));
     }
 
     @Override
     public User getById(Long id) {
-        String sql = "SELECT * FROM USERS WHERE user_id = ?";
-
-        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(sql, id);
+        SqlRowSet rowSet = jdbcTemplate.queryForRowSet(GET_USER_BY_ID, id);
 
         if (rowSet.next()) {
             User user = new User(rowSet.getString("login"),
@@ -56,9 +60,7 @@ public class UserDbStorage implements UserStorage {
             user.setId(IdGenerator.nextUserId());
         }
 
-        final String sql = "INSERT INTO users (user_id, login, name, email, birthday) VALUES (?, ?, ?, ?, ?)";
-
-        jdbcTemplate.update(sql, user.getId(), user.getLogin(), user.getName(), user.getEmail(),
+        jdbcTemplate.update(CREATE_USER, user.getId(), user.getLogin(), user.getName(), user.getEmail(),
                 user.getBirthday());
 
         return user;
@@ -66,15 +68,13 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public User update(User user) {
-        final String sql = "UPDATE USERS SET login = ?, name = ?, email = ?, birthday = ? WHERE user_id = ?";
-        jdbcTemplate.update(sql, user.getLogin(), user.getName(), user.getEmail(), user.getBirthday(), user.getId());
+        jdbcTemplate.update(UPDATE_USER, user.getLogin(), user.getName(), user.getEmail(), user.getBirthday(), user.getId());
         return user;
     }
 
 
     public void delete(User user) {
-        final String sql = "DELETE FROM USERS WHERE user_id = ?";
-        jdbcTemplate.update(sql, user.getId());
+        jdbcTemplate.update(DELETE_USER, user.getId());
     }
 
     private User mapRowToUser(ResultSet rs) throws SQLException {

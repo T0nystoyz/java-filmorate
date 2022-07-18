@@ -19,6 +19,21 @@ import java.util.Set;
 @Component
 @Data
 public class FilmDbStorage implements FilmStorage {
+    private static final String INSERT_INTO_FILMS =
+            "INSERT INTO FILMS (film_id, name, description, release_date, duration, mpa_id) VALUES (?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_INTO_FILM_GENRES =
+            "INSERT INTO FILM_GENRES (film_id, genre_id) VALUES (?, ?)";
+    private static final String UPDATE_FILM =
+            "UPDATE FILMS SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = ? WHERE film_id = ?";
+    private static final String DELETE_FROM_FILM_GENRES =
+            "DELETE FROM FILM_GENRES WHERE film_id = ?";
+    private static final String GET_BY_ID =
+            "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = ?";
+    private static final String GET_GENRES_BY_FILM_ID =
+            "SELECT * FROM FILM_GENRES INNER JOIN GENRES ON GENRES.genre_id = FILM_GENRES.genre_id WHERE film_id = ?";
+    private static final String DELETE_FILM =
+            "DELETE FROM FILMS WHERE film_id = ?";
+
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -28,48 +43,37 @@ public class FilmDbStorage implements FilmStorage {
             film.setId(IdGenerator.nextFilmId());
         }
 
-        final String sql = "INSERT INTO films (film_id, name, description, release_date, duration, mpa_id)"
-                + " VALUES (?, ?, ?, ?, ?, ?)";
-
-        jdbcTemplate.update(sql, film.getId(), film.getName(), film.getDescription(), film.getReleaseDate(),
+        jdbcTemplate.update(INSERT_INTO_FILMS, film.getId(), film.getName(), film.getDescription(), film.getReleaseDate(),
                 film.getDuration(), film.getMpa().getId());
 
         final Set<Genre> filmGenres = film.getGenres();
 
         if (filmGenres != null) {
-            final String genreSaveSql = "INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?)";
             Film finalFilm = film;
-            filmGenres.forEach(x -> jdbcTemplate.update(genreSaveSql, finalFilm.getId(), x.getId()));
+            filmGenres.forEach(x -> jdbcTemplate.update(INSERT_INTO_FILM_GENRES, finalFilm.getId(), x.getId()));
         }
-
         return film;
     }
 
     @Override
     public Film update(Film film) {
-        final String sql = "UPDATE films SET name = ?, description = ?, release_date = ?, duration = ?, mpa_id = ?"
-                + " WHERE film_id = ?";
 
-        jdbcTemplate.update(sql, film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(),
+        jdbcTemplate.update(UPDATE_FILM, film.getName(), film.getDescription(), film.getReleaseDate(), film.getDuration(),
                 film.getMpa().getId(), film.getId());
 
-        final String deleteGenres = "DELETE FROM film_genres WHERE film_id = ?";
-        jdbcTemplate.update(deleteGenres, film.getId());
+        jdbcTemplate.update(DELETE_FROM_FILM_GENRES, film.getId());
 
         final Set<Genre> filmGenres = film.getGenres();
 
         if (filmGenres != null) {
-            final String genreSaveSql = "INSERT INTO film_genres (film_id, genre_id) VALUES (?, ?)";
-            filmGenres.forEach(x -> jdbcTemplate.update(genreSaveSql, film.getId(), x.getId()));
+            filmGenres.forEach(x -> jdbcTemplate.update(INSERT_INTO_FILM_GENRES, film.getId(), x.getId()));
         }
-
         return film;
     }
 
     @Override
     public Film getById(Long id) {
-        final String sql = "SELECT * FROM FILMS LEFT JOIN MPA ON FILMS.mpa_id = MPA.mpa_id WHERE film_id = ?";
-        List<Film> films = jdbcTemplate.query(sql, (rs, numRow) -> mapRowToFilm(rs, getFilmGenresById(id)), id);
+        List<Film> films = jdbcTemplate.query(GET_BY_ID, (rs, numRow) -> mapRowToFilm(rs, getFilmGenresById(id)), id);
         return films.size() > 0 ? films.get(0) : null;
     }
 
@@ -88,16 +92,13 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     private Set<Genre> getFilmGenresById(Long id) {
-        final String sql = "SELECT * FROM FILM_GENRES INNER JOIN GENRES ON GENRES.genre_id = FILM_GENRES.genre_id"
-                + " WHERE film_id = ?";
 
-        return new HashSet<>(jdbcTemplate.query(sql, (rs, getNum) -> Genre.builder().id(rs.getInt("genre_id"))
+        return new HashSet<>(jdbcTemplate.query(GET_GENRES_BY_FILM_ID, (rs, getNum) -> Genre.builder().id(rs.getInt("genre_id"))
                 .title(rs.getString("title")).build(), id));
     }
 
     public void deleteFilm(Film film) {
-        final String sql = "DELETE FROM FILMS WHERE film_id = ?";
-        jdbcTemplate.update(sql, film.getId());
+        jdbcTemplate.update(DELETE_FILM, film.getId());
     }
 
     private Film mapRowToFilm(ResultSet rs, Set<Genre> genres) throws SQLException {

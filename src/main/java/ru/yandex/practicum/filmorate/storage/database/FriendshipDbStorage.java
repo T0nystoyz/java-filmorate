@@ -6,27 +6,28 @@ import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Friendship;
 
 import java.util.Collection;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class FriendshipDbStorage implements FriendshipStorage{
+public class FriendshipDbStorage implements FriendshipStorage {
+    private static final String SELECT = "SELECT friend_id FROM FRIENDSHIPS WHERE user_id = ?";
+    private static final String INSERT = "INSERT INTO FRIENDSHIPS (user_id, friend_id) VALUES (?, ?)";
+    private static final String DELETE = "DELETE FROM FRIENDSHIPS WHERE user_id = ? AND friend_id = ?";
+
     private final JdbcTemplate jdbcTemplate;
+
     @Override
     public Collection<Long> getFriendsIds(Long id) {
-        final String sql = "SELECT friend_id FROM FRIENDSHIPS WHERE user_id = ?";
-        return jdbcTemplate.query(sql, (rs, numRow) -> rs.getLong("friend_id"), id);
+        return jdbcTemplate.query(SELECT, (rs, numRow) -> rs.getLong("friend_id"), id);
     }
 
     @Override
     public void create(Friendship friendship) {
-        final String sql = "INSERT INTO FRIENDSHIPS (user_id, friend_id) VALUES (?, ?)";
-        jdbcTemplate.update(sql, friendship.getUser().getId(), friendship.getFriend().getId());
+        jdbcTemplate.update(INSERT, friendship.getUser().getId(), friendship.getFriend().getId());
     }
 
     @Override
     public void delete(Friendship friendship) {
-        final String sql = "DELETE FROM FRIENDSHIPS WHERE user_id = ? AND friend_id = ?";
-        jdbcTemplate.update(sql, friendship.getUser().getId(), friendship.getFriend().getId());
+        jdbcTemplate.update(DELETE, friendship.getUser().getId(), friendship.getFriend().getId());
     }
 }
