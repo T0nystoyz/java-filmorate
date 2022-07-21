@@ -1,6 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
@@ -14,6 +17,9 @@ import java.time.LocalDate;
 @Data
 @Slf4j
 @Component
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
     private Long id;
     @NotBlank(message = "поле *login* не может быть пустым")
@@ -26,5 +32,12 @@ public class User {
     @Past(message = "поле *birthday* не может указывать на будущую дату")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
-}
 
+    public User(String login, String name, String email, LocalDate birthday) {
+        this.login = login;
+        this.name = name;
+        this.email = email;
+        this.birthday = birthday;
+    }
+
+}

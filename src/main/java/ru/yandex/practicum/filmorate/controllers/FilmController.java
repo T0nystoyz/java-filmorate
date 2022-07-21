@@ -35,7 +35,8 @@ public class FilmController {
 
     @PutMapping("/films")
     public ResponseEntity<Film> update(@Valid @RequestBody Film film) {
-        return film.getId() < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(service.update(film), HttpStatus.OK);
+        return film.getId() < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(service.update(film), HttpStatus.OK);
     }
 
     @PutMapping("/films/{id}/like/{userId}")
@@ -56,6 +57,7 @@ public class FilmController {
 
     @GetMapping("/films/{id}")
     public ResponseEntity<Film> getById(@PathVariable Long id) {
-        return id < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND) : new ResponseEntity<>(service.getById(id), HttpStatus.OK);
+        return id < 1 ? new ResponseEntity<>(HttpStatus.NOT_FOUND) :
+                new ResponseEntity<>(service.getById(id), HttpStatus.OK);
     }
 }

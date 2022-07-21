@@ -3,67 +3,72 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exceptions.UserDoesNotExistByIdException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.model.Like;
+import ru.yandex.practicum.filmorate.storage.database.FilmDbStorage;
+import ru.yandex.practicum.filmorate.storage.database.LikeDbStorage;
+import ru.yandex.practicum.filmorate.storage.database.LikeStorage;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Collection;
 
 @Service
 @Slf4j
 public class FilmService {
-
-    private final InMemoryFilmStorage storage;
-    private final Map<Long, Set<Long>> likes = new HashMap<>();
+    private final FilmDbStorage filmStorage;
+    private final UserService userService;
+    private final LikeStorage likeStorage;
 
     @Autowired
-    public FilmService(InMemoryFilmStorage filmStorage) {
-        this.storage = filmStorage;
-    }
-
-    public List<Film> getAll() {
-        return storage.getAll();
-    }
-
-    public void createFilm(Film film) {
-        storage.createFilm(film);
-    }
-
-    public Film update(Film film) {
-        storage.update(film);
-        return film;
-    }
-
-    public Film getById(Long id) {
-        return storage.getById(id);
+    FilmService(FilmDbStorage FilmDbStorage, LikeDbStorage databaseLikeStorage,
+                UserService userService) {
+        this.filmStorage = FilmDbStorage;
+        this.userService = userService;
+        this.likeStorage = databaseLikeStorage;
     }
 
     public void saveLike(Long filmId, Long userId) {
-        log.info("попытка поставить лайк фильму");
-        if (!likes.containsKey(filmId)) {
-            log.info("у фильма {} появился первый лайк!", storage.getById(filmId).getName());
-            likes.put(filmId, new HashSet<>());
-        }
-        likes.get(filmId).add(userId);
-        log.info("пользователь с id {} поставил лайк фильму {}", userId, storage.getById(filmId).getName());
+
+        likeStorage.saveLike(Like
+                .builder()
+                .film(filmStorage.getById(filmId))
+                .user(userService.getById(userId))
+                .build());
     }
 
-    public void deleteLike(Long filmId, Long userId) throws UserDoesNotExistByIdException {
-        if (!likes.containsKey(filmId)) {
-            log.info("у фильма {} нет лайков!", storage.getById(filmId).getName());
-            throw new UserDoesNotExistByIdException("у фильма " + storage.getById(filmId).getName() + " нет лайков!");
-        }
-        likes.get(filmId).remove(userId);
+    public void deleteLike(Long filmId, Long userId) {
+
+        likeStorage.deleteLike(Like
+                .builder()
+                .film(filmStorage.getById(filmId))
+                .user(userService.getById(userId))
+                .build());
     }
 
+    public Collection<Film> getPopularFilms(Integer count) {
+        return likeStorage.getPopularFilms(count != null ? count : 10);
+    }
 
-    public Collection<Film> getPopularFilms(Integer limit) {
-        log.info("получен запрос на популярные фильмы");
-        final Comparator<Film> comparator = Comparator
-                .comparingInt(x -> likes.getOrDefault(x.getId(), new HashSet<>()).size());
-        return storage.getFilms().values().stream().sorted(comparator.reversed())
-                .limit(limit).collect(Collectors.toList());
+    public Film createFilm(Film film) {
+        return filmStorage.createFilm(film);
+    }
+
+    public Collection<Film> getAll() {
+        return filmStorage.getAllFilms();
+    }
+
+    public Film getById(Long id) {
+        Film film = filmStorage.getById(id);
+        return film;
+    }
+
+    public Film update(Film newFilm) {
+        final Film oldFilm = getById(newFilm.getId());
+        if (oldFilm.equals(newFilm)) return newFilm;
+        return filmStorage.update(newFilm);
+    }
+
+    public void deleteFilm(Film film) {
+        filmStorage.deleteFilm(film);
     }
 
 }
