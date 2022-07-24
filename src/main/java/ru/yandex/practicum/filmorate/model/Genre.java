@@ -13,6 +13,7 @@ import java.util.Objects;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EqualsAndHashCode(exclude = "title")
 public class Genre {
     @JsonProperty("name")
     @NotBlank String title;
@@ -21,18 +22,5 @@ public class Genre {
     @JsonCreator
     public static Genre forObject(@JsonProperty("id") int id, @JsonProperty String title) {
         return new Genre(title, id);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Genre genre = (Genre) o;
-        return getId().equals(genre.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getId());
     }
 }
