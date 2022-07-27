@@ -1,12 +1,26 @@
 package ru.yandex.practicum.filmorate.model;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.*;
 
-@Data
+import javax.validation.constraints.NotBlank;
+import java.util.Objects;
+
+@Getter
+@Setter
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@EqualsAndHashCode(exclude = "title")
 public class Genre {
-    private int id;
-    private String name;
+    @JsonProperty("name")
+    @NotBlank String title;
+    private Integer id;
+
+    @JsonCreator
+    public static Genre forObject(@JsonProperty("id") int id, @JsonProperty String title) {
+        return new Genre(title, id);
+    }
 }

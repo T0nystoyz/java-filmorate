@@ -11,9 +11,7 @@ import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Slf4j
 @Validated
@@ -44,7 +42,7 @@ public class UserController {
 
     @PutMapping("/users/{id}/friends/{friendId}")
     public void addFriend(@PathVariable Long id, @PathVariable Long friendId) {
-            service.addFriend(id, friendId);
+        service.addFriend(id, friendId);
     }
 
 
@@ -55,7 +53,7 @@ public class UserController {
     }
 
     @GetMapping("/users/{id}/friends")
-    public Set<User> getFriendsOf(@PathVariable Long id) {
+    public List<User> getFriendsOf(@PathVariable Long id) {
         return service.getFriendsOf(id);
     }
 
